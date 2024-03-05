@@ -1,6 +1,6 @@
 Django==4.2.9
 Pillow==10.2.0
-environs==9.5.0
+environs==11.0.0
 django-admin-sortable2==2.1.10
 django-tinymce==3.6.1
 requests==2.31.0
