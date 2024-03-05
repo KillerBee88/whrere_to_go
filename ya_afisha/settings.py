@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = Env.str('DJANGO_SECRET_KEY')
 
-DEBUG = False
+DEBUG = Env.bool('DEBUG', False)
 
 ALLOWED_HOSTS = Env.list("DJANGO_ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
 
