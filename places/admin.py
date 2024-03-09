@@ -10,10 +10,10 @@ class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
     readonly_fields = ['image_preview']
     fields = ('image', 'image_preview', 'order')
 
-    def image_preview(self, obj):
+    def generate_image_html(self, obj):
         return format_html('<img src="{}" style="max-height: 200px;"/>', obj.image.url) if obj.image else ''
 
-    image_preview.short_description = "Превью"
+    generate_image_html.short_description = "Превью"
 
 
 @admin.register(Place)
