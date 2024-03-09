@@ -6,6 +6,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.core.files.base import ContentFile
 from places.models import Place, Image
 
+
 class Command(BaseCommand):
     help = 'Загружает локацию из json файла в БД'
 
@@ -38,9 +39,11 @@ class Command(BaseCommand):
             )
 
             if created:
-                self.stdout.write(self.style.SUCCESS(f'Successfully created place: {place.title}'))
+                self.stdout.write(self.style.SUCCESS(
+                    f'Successfully created place: {place.title}'))
             else:
-                self.stdout.write(self.style.WARNING(f'Place already exists: {place.title}'))
+                self.stdout.write(self.style.WARNING(
+                    f'Place already exists: {place.title}'))
 
             for img_url in place_params['imgs']:
                 try:
@@ -48,15 +51,20 @@ class Command(BaseCommand):
                     response.raise_for_status()
                     filepath = unquote(urlparse(img_url).path)
                     filename = path.basename(filepath)
-                    image_content = ContentFile(response.content, name=filename)
+                    image_content = ContentFile(
+                        response.content, name=filename)
                     image, img_created = Image.objects.get_or_create(
                         location=place,
-                        defaults={'image': image_content, 'order': place.images.count() + 1}
+                        defaults={'image': image_content,
+                                  'order': place.images.count() + 1}
                     )
                     if img_created:
-                        self.stdout.write(self.style.SUCCESS(f'Added image {filename} to place: {place.title}'))
+                        self.stdout.write(self.style.SUCCESS(
+                            f'Added image {filename} to place: {place.title}'))
                 except requests.exceptions.RequestException as err:
-                    self.stdout.write(self.style.WARNING(f"HTTP error occurred while loading image: {err}"))
+                    self.stdout.write(self.style.WARNING(
+                        f"HTTP error occurred while loading image: {err}"))
                     continue
 
-        self.stdout.write(self.style.SUCCESS('Loading of places and images is complete.'))
+        self.stdout.write(self.style.SUCCESS(
+            'Loading of places and images is complete.'))
