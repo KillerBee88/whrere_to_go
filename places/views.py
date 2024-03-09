@@ -28,6 +28,7 @@ def show_mainpage(request):
     }
     return render(request, 'main_page.html', context={'geo_json': geo_json})
 
+
 def show_place(request, place_id):
     place = get_object_or_404(Place, id=place_id)
     place_data = {
@@ -40,6 +41,6 @@ def show_place(request, place_id):
             'lat': place.latitude
         }
     }
-    return JsonResponse(place_data, safe=False, 
-                        json_dumps_params={'ensure_ascii': False, 
+    return JsonResponse(place_data, safe=False,
+                        json_dumps_params={'ensure_ascii': False,
                                            'indent': 4})
