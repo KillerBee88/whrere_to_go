@@ -3,6 +3,7 @@ from django.utils.html import format_html
 from adminsortable2.admin import SortableInlineAdminMixin, SortableAdminBase
 from .models import Place, Image
 
+
 class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
     model = Image
     extra = 3
@@ -14,6 +15,7 @@ class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
 
     image_preview.short_description = "Превью"
 
+
 @admin.register(Place)
-class PlaceAdmin(SortableAdminBase,admin.ModelAdmin):
+class PlaceAdmin(SortableAdminBase, admin.ModelAdmin):
     inlines = [ImageInline]
