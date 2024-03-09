@@ -3,10 +3,10 @@ from tinymce.models import HTMLField
 
 class Place(models.Model):
     title = models.CharField(max_length=200, verbose_name='Заголовок')
-    short_description = models.TextField(null=True, blank=True, verbose_name='Краткое описание')
-    long_description = HTMLField(null=True, blank=True, verbose_name='Полное описание')
-    latitude = models.FloatField(null=True, blank=True, verbose_name='Широта')
-    longitude = models.FloatField(null=True, blank=True, verbose_name='Долгота')
+    short_description = models.TextField(null=False, blank=True, verbose_name='Краткое описание')
+    long_description = HTMLField(null=False, blank=True, verbose_name='Полное описание')
+    latitude = models.FloatField(null=False, blank=True, verbose_name='Широта')
+    longitude = models.FloatField(null=False, blank=True, verbose_name='Долгота')
 
     def get_coordinates(self):
         return [self.latitude, self.longitude]
