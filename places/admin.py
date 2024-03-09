@@ -11,7 +11,7 @@ class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
     fields = ('image', 'image_preview', 'order')
 
     def generate_image_html(self, obj):
-        return format_html('<img src="{}" style="max-height: 200px;"/>', obj.image.url) if obj.image else ''
+        return format_html('<img src="{}" style="max-width: 200px; max-height: 200px;"/>', obj.image.url) if obj.image else ''
 
     generate_image_html.short_description = "Превью"
 
