@@ -28,8 +28,8 @@ class Command(BaseCommand):
                 raise CommandError(f"HTTP error occurred: {err}")
 
             defaults = {
-                'description_short': place_params['description_short'],
-                'description_long': place_params['description_long'],
+                'short_description': place_params['description_short'],
+                'long_description': place_params['description_long'],
                 'latitude': place_params['coordinates']['lat'],
                 'longitude': place_params['coordinates']['lng'],
             }
@@ -40,10 +40,10 @@ class Command(BaseCommand):
 
             if created:
                 self.stdout.write(self.style.SUCCESS(
-                    f'Successfully created place: {place.title}'))
+                    f'Успешно добавленно место: {place.title}'))
             else:
                 self.stdout.write(self.style.WARNING(
-                    f'Place already exists: {place.title}'))
+                    f'Место уже существует: {place.title}'))
 
             for img_url in place_params['imgs']:
                 try:
@@ -60,11 +60,11 @@ class Command(BaseCommand):
                     )
                     if img_created:
                         self.stdout.write(self.style.SUCCESS(
-                            f'Added image {filename} to place: {place.title}'))
+                            f'Добавлено фото {filename} в место: {place.title}'))
                 except requests.exceptions.RequestException as err:
                     self.stdout.write(self.style.WARNING(
-                        f"HTTP error occurred while loading image: {err}"))
+                        f"Возникла ошибка HTTP при загрузке фотографии: {err}"))
                     continue
 
         self.stdout.write(self.style.SUCCESS(
-            'Loading of places and images is complete.'))
+            'Загрузка мест и фотографий завершена.'))
