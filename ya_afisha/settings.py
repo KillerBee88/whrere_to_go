@@ -1,13 +1,16 @@
 from environs import Env
 from pathlib import Path
 
+env = Env()
+env.read_env()
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = Env.str('DJANGO_SECRET_KEY')
+SECRET_KEY = env.str('DJANGO_SECRET_KEY')
 
-DEBUG = Env.bool('DEBUG', False)
+DEBUG = env.bool('DEBUG', True)
 
-ALLOWED_HOSTS = Env.list("DJANGO_ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
 
 INSTALLED_APPS = [
     'django.contrib.admin',
