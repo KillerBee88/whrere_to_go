@@ -53,14 +53,14 @@ class Command(BaseCommand):
                     filename = path.basename(filepath)
                     image_content = ContentFile(
                         response.content, name=filename)
-                    image, img_created = Image.objects.get_or_create(
+                    image = Image(
                         location=place,
-                        defaults={'image': image_content,
-                                  'order': place.images.count() + 1}
+                        image=image_content,
+                        order=place.images.count() + 1
                     )
-                    if img_created:
-                        self.stdout.write(self.style.SUCCESS(
-                            f'Добавлено фото {filename} в место: {place.title}'))
+                    image.save()
+                    self.stdout.write(self.style.SUCCESS(
+                        f'Добавлено фото {filename} в место: {place.title}'))
                 except requests.exceptions.RequestException as err:
                     self.stdout.write(self.style.WARNING(
                         f"Возникла ошибка HTTP при загрузке фотографии: {err}"))
