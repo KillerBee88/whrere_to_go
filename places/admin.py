@@ -15,6 +15,12 @@ class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
 
     generate_image_html.short_description = "Превью"
 
+class ImageAdmin(admin.ModelAdmin):
+    list_display = ['location', 'image', 'order']
+    list_filter = ['location']
+
+admin.site.register(Image, ImageAdmin)
+
 
 @admin.register(Place)
 class PlaceAdmin(SortableAdminBase, admin.ModelAdmin):
