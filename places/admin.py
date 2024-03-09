@@ -7,8 +7,8 @@ from .models import Place, Image
 class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
     model = Image
     extra = 3
-    readonly_fields = ['image_preview']
-    fields = ('image', 'image_preview', 'order')
+    readonly_fields = ['generate_image_html']
+    fields = ('image', 'generate_image_html', 'order')
 
     def generate_image_html(self, obj):
         return format_html('<img src="{}" style="max-width: 200px; max-height: 200px;"/>', obj.image.url) if obj.image else ''
