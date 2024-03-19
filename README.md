@@ -16,7 +16,6 @@ pip install -r requirements.txt
 
 Создайте базу данных:
 ```shell
-python manage.py makemigrations
 python manage.py migrate
 ```
 Создайте администратора:
