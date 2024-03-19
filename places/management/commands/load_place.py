@@ -63,7 +63,7 @@ class Command(BaseCommand):
                         f'Добавлено фото {filename} в место: {place.title}'))
                 except requests.exceptions.RequestException as err:
                     self.stdout.write(self.style.WARNING(
-                        f"Возникла ошибка HTTP при загрузке фотографии: {err}"))
+                        f'Возникла ошибка HTTP при загрузке фотографии: {err}'))
                     continue
 
         self.stdout.write(self.style.SUCCESS(
