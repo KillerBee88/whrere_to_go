@@ -53,12 +53,11 @@ class Command(BaseCommand):
                     filename = path.basename(filepath)
                     image_content = ContentFile(
                         response.content, name=filename)
-                    image = Image(
-                        location=place,
-                        image=image_content,
-                        order=place.images.count() + 1
+                    Image.objects.create(
+                    location=place,
+                    image=image_content,
+                    order=place.images.count() + 1
                     )
-                    image.save()
                     self.stdout.write(self.style.SUCCESS(
                         f'Добавлено фото {filename} в место: {place.title}'))
                 except requests.exceptions.RequestException as err:
