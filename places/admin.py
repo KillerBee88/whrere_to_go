@@ -11,10 +11,10 @@ MAX_IMAGE_WIDTH = 200
 class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
     model = Image
     extra = 3
-    readonly_fields = ['generate_image_html']
-    fields = ('image', 'generate_image_html', 'order')
+    readonly_fields = ['get_image_preview']
+    fields = ('image', 'get_image_preview', 'order')
 
-    def generate_image_html(self, obj):
+    def get_image_preview(self, obj):
         if obj.image:
             return format_html(
                 '<img src="{}" style="max-width: {}px; max-height: {}px;"/>',
@@ -24,7 +24,7 @@ class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
             )
         return ''
 
-    generate_image_html.short_description = "Превью"
+    get_image_preview.short_description = "Превью"
 
 
 class ImageAdmin(admin.ModelAdmin):
