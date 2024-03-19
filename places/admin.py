@@ -1,7 +1,8 @@
+from adminsortable2.admin import SortableAdminBase, SortableInlineAdminMixin
 from django.contrib import admin
 from django.utils.html import format_html
-from adminsortable2.admin import SortableInlineAdminMixin, SortableAdminBase
-from .models import Place, Image
+
+from .models import Image, Place
 
 MAX_IMAGE_HEIGHT = 200
 MAX_IMAGE_WIDTH = 200
