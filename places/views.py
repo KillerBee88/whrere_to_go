@@ -5,7 +5,7 @@ from places.models import Place
 
 
 def show_mainpage(request):
-    places = Place.objects.all().prefetch_related('images')
+    places = Place.objects.all()
     features = []
     for place in places:
         feature = {
