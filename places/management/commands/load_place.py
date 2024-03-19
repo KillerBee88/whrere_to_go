@@ -54,9 +54,9 @@ class Command(BaseCommand):
                     image_content = ContentFile(
                         response.content, name=filename)
                     Image.objects.create(
-                    location=place,
-                    image=image_content,
-                    order=place.images.count() + 1
+                        location=place,
+                        image=image_content,
+                        order=place.images.count() + 1
                     )
                     self.stdout.write(self.style.SUCCESS(
                         f'Добавлено фото {filename} в место: {place.title}'))
