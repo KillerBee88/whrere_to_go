@@ -30,6 +30,7 @@ class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
 class ImageAdmin(admin.ModelAdmin):
     list_display = ['location', 'image', 'order']
     list_filter = ['location']
+    autocomplete_fields = ['location']
 
 
 admin.site.register(Image, ImageAdmin)
@@ -37,4 +38,5 @@ admin.site.register(Image, ImageAdmin)
 
 @admin.register(Place)
 class PlaceAdmin(SortableAdminBase, admin.ModelAdmin):
-    inlines = [ImageInline]
+    search_fields = ['title']
+    list_display = ['title', 'short_description', 'latitude', 'longitude']
