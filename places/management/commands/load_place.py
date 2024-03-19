@@ -1,10 +1,11 @@
 from os import path
-from urllib.parse import urlparse, unquote
+from urllib.parse import unquote, urlparse
 
 import requests
-from django.core.management.base import BaseCommand, CommandError
 from django.core.files.base import ContentFile
-from places.models import Place, Image
+from django.core.management.base import BaseCommand, CommandError
+
+from places.models import Image, Place
 
 
 class Command(BaseCommand):
