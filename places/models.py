@@ -8,10 +8,8 @@ class Place(models.Model):
         null=False, blank=True, verbose_name='Краткое описание')
     long_description = HTMLField(
         null=False, blank=True, verbose_name='Полное описание')
-    latitude = models.FloatField(
-        null=False, blank=False, verbose_name='Широта')
-    longitude = models.FloatField(
-        null=False, blank=False, verbose_name='Долгота')
+    latitude = models.FloatField(verbose_name='Широта')
+    longitude = models.FloatField(verbose_name='Долгота')
 
     class Meta:
         verbose_name = 'Место'
