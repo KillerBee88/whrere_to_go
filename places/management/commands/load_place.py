@@ -55,22 +55,20 @@ class Command(BaseCommand):
                 f'Место уже существует: {place.title}'))
         return place
 
-    def load_images_for_place(self, place, img_urls):
-        for img_url in img_urls:
-            try:
-                response = requests.get(img_url)
-                response.raise_for_status()
-                filepath = unquote(urlparse(img_url).path)
-                filename = path.basename(filepath)
-                image_content = ContentFile(response.content, name=filename)
-                Image.objects.create(
-                    location=place,
-                    image=image_content,
-                    order=place.images.count() + 1
-                )
-                self.stdout.write(self.style.SUCCESS(
-                    f'Добавлено фото {filename} в место: {place.title}'))
-            except requests.exceptions.RequestException as err:
-                self.stdout.write(self.style.WARNING(
-                    f'Возникла ошибка HTTP при загрузке фотографии: {err}'))
-                continue
+    def load_images_for_place(self, place, img_url):
+        try:
+            response = requests.get(img_url)
+            response.raise_for_status()
+            filepath = unquote(urlparse(img_url).path)
+            filename = path.basename(filepath)
+            image_content = ContentFile(response.content, name=filename)
+            Image.objects.create(
+                location=place,
+                image=image_content,
+                order=place.images.count() + 1
+            )
+            self.stdout.write(self.style.SUCCESS(
+                f'Добавлено фото {filename} в место: {place.title}'))
+        except requests.exceptions.RequestException as err:
+            self.stdout.write(self.style.WARNING(
+                f'Возникла ошибка HTTP при загрузке фотографии: {err}'))
