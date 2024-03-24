@@ -4,7 +4,9 @@ from urllib.parse import unquote, urlparse
 import requests
 from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand, CommandError
+
 from places.models import Image, Place
+
 
 class Command(BaseCommand):
     help = 'Загружает локацию из json файла в БД'
@@ -20,7 +22,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for json_url in options['json_urls']:
             self.process_json_url(json_url)
-        self.stdout.write(self.style.SUCCESS('Загрузка мест и фотографий завершена.'))
+        self.stdout.write(self.style.SUCCESS(
+            'Загрузка мест и фотографий завершена.'))
 
     def process_json_url(self, json_url):
         try:
@@ -45,9 +48,11 @@ class Command(BaseCommand):
             defaults=defaults
         )
         if created:
-            self.stdout.write(self.style.SUCCESS(f'Успешно добавленно место: {place.title}'))
+            self.stdout.write(self.style.SUCCESS(
+                f'Успешно добавленно место: {place.title}'))
         else:
-            self.stdout.write(self.style.WARNING(f'Место уже существует: {place.title}'))
+            self.stdout.write(self.style.WARNING(
+                f'Место уже существует: {place.title}'))
         return place
 
     def load_images_for_place(self, place, img_urls):
@@ -63,7 +68,9 @@ class Command(BaseCommand):
                     image=image_content,
                     order=place.images.count() + 1
                 )
-                self.stdout.write(self.style.SUCCESS(f'Добавлено фото {filename} в место: {place.title}'))
+                self.stdout.write(self.style.SUCCESS(
+                    f'Добавлено фото {filename} в место: {place.title}'))
             except requests.exceptions.RequestException as err:
-                self.stdout.write(self.style.WARNING(f'Возникла ошибка HTTP при загрузке фотографии: {err}'))
+                self.stdout.write(self.style.WARNING(
+                    f'Возникла ошибка HTTP при загрузке фотографии: {err}'))
                 continue
