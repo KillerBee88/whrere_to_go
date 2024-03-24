@@ -59,9 +59,14 @@ class Command(BaseCommand):
         try:
             response = requests.get(img_url)
             response.raise_for_status()
+            content = response.content
+        except requests.exceptions.RequestException as err:
+            self.stdout.write(self.style.WARNING(
+                f'Возникла ошибка HTTP при загрузке фотографии: {err}'))
+        else:
             filepath = unquote(urlparse(img_url).path)
             filename = path.basename(filepath)
-            image_content = ContentFile(response.content, name=filename)
+            image_content = ContentFile(content, name=filename)
             Image.objects.create(
                 location=place,
                 image=image_content,
@@ -69,6 +74,3 @@ class Command(BaseCommand):
             )
             self.stdout.write(self.style.SUCCESS(
                 f'Добавлено фото {filename} в место: {place.title}'))
-        except requests.exceptions.RequestException as err:
-            self.stdout.write(self.style.WARNING(
-                f'Возникла ошибка HTTP при загрузке фотографии: {err}'))
