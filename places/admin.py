@@ -26,6 +26,7 @@ class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
 
     get_image_preview.short_description = "Превью"
 
+
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
     list_display = ['location', 'image', 'order']
