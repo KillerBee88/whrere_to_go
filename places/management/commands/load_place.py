@@ -55,26 +55,26 @@ class Command(BaseCommand):
                 f'Место уже существует: {place.title}'))
         return place
 
-    def load_images_for_place(self, place, img_urls):
-        current_order = place.images.count()
+    def load_image_for_place(self, place, img_url, order=None):
+        if order is None:
+            order = place.images.count() + 1
+        try:
+            response = requests.get(img_url)
+            response.raise_for_status()
+            content = response.content
+        except requests.exceptions.RequestException as err:
+            self.stdout.write(self.style.WARNING(
+                f'Возникла ошибка HTTP при загрузке фотографии: {err}'))
+            return
 
-        for order, img_url in enumerate(img_urls, start=current_order + 1):
-            try:
-                response = requests.get(img_url)
-                response.raise_for_status()
-                content = response.content
-            except requests.exceptions.RequestException as err:
-                self.stdout.write(self.style.WARNING(
-                    f'Возникла ошибка HTTP при загрузке фотографии: {err}'))
-                continue
-
-            filepath = unquote(urlparse(img_url).path)
-            filename = path.basename(filepath)
-            image_content = ContentFile(content, name=filename)
-            Image.objects.create(
-                location=place,
-                image=image_content,
-                order=order
-            )
-            self.stdout.write(self.style.SUCCESS(
-                f'Добавлено фото {filename} в место: {place.title}'))
+        filepath = unquote(urlparse(img_url).path)
+        filename = path.basename(filepath)
+        image_content = ContentFile(content, name=filename)
+        Image.objects.create(
+            location=place,
+            image=image_content,
+            order=order
+        )
+        self.stdout.write(self.style.SUCCESS(
+            f'Добавлено фото {filename} в место: {place.title}'))
+        
