@@ -77,4 +77,3 @@ class Command(BaseCommand):
         )
         self.stdout.write(self.style.SUCCESS(
             f'Добавлено фото {filename} в место: {place.title}'))
-        
