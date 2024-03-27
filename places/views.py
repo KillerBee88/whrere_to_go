@@ -27,7 +27,7 @@ def show_mainpage(request):
         'type': 'FeatureCollection',
         'features': features
     }
-    return render(request, 'places.html', context={'feature_collection': feature_collection})
+    return render(request, 'main_page.html', context={'feature_collection': feature_collection})
 
 
 def show_place(request, place_id):
