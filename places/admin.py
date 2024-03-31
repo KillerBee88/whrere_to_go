@@ -38,3 +38,4 @@ class ImageAdmin(admin.ModelAdmin):
 class PlaceAdmin(SortableAdminBase, admin.ModelAdmin):
     search_fields = ['title']
     list_display = ['title', 'short_description', 'latitude', 'longitude']
+    inlines = [ImageInline]
