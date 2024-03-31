@@ -27,11 +27,12 @@ def show_mainpage(request):
         'type': 'FeatureCollection',
         'features': features
     }
-    return render(request, 'main_page.html', context={'feature_collection': feature_collection})
+    return render(request, 'places/main_page.html', context={'feature_collection': feature_collection})
 
 
 def show_place(request, place_id):
-    place = get_object_or_404(Place.objects.prefetch_related('images'), id=place_id)
+    place = get_object_or_404(
+        Place.objects.prefetch_related('images'), id=place_id)
     serialized_place = {
         'title': place.title,
         'imgs': [image.image.url for image in place.images.all()],
