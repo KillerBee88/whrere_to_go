@@ -34,7 +34,8 @@ class Command(BaseCommand):
             raise CommandError(f"HTTP error occurred: {err}")
 
         place = self.create_or_update_place(place_params)
-        self.load_images_for_place(place, place_params['imgs'])
+        for order, img_url in enumerate(place_params['imgs'], start=1):
+            self.load_image_for_place(place, img_url, order=order)
 
     def create_or_update_place(self, place_params):
         defaults = {
